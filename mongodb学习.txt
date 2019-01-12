@@ -1,0 +1,3 @@
+﻿要以管理员的身份运行cmd，进入到mongodb安装目录下bin文件夹下执行下面命令
+1.设置db与log日志保存位置：
+mongod.exe --dbpath "D:\mongodb\data\db"  --logpath "D:\mongodb\logs\log.txt"  --install -serviceName "MongoDB"
