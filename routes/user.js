@@ -39,7 +39,8 @@ router.get("/list", function (req, res) {
     //设置最大查询数量
     query.limit(pageSize);
     if (userName) {
-        query.where("userName", userName);
+        //模糊查询{$regex:userName}
+        query.where("userName", {$regex:userName});
     }
     //计算分页数据
     query.exec(function (err, result) {
@@ -59,7 +60,7 @@ router.get("/list", function (req, res) {
 router.get("/detail", function (req, res) {
     const name = req.query.name;
     User.findOne({
-        userName: name
+        userName: {$regex:name}
     }, function (err, result) {
         if (err) {
             console.log("Error:" + err);
