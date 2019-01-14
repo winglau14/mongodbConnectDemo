@@ -3,37 +3,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
-//const router = express.Router();
-//user model 模块引入
-//const User = require("./model/userModel");
+const router = express.Router();
 //api接口校验及权限拦截
 const jwt= require('jsonwebtoken');
 const expressJwt = require('express-jwt');
-//定义签名
-const secret = config.jwtKey;
 //用户模块路由
 const user = require("./routes/user");
-
+//首页默认路径
+router.get('/', function(req, res, next) {
+    res.send('welcome to express!');
+});
 /*router.get('/', function(req, res, next) {
     res.send('respond with a resource');
-});
-//get查询数据
-router.get("/user", function (req, res) {
-    var name = req.query.name;
-    User.find({
-        userName: name
-    }, function (err, result) {
-        if (err) {
-            console.log("Error:" + err);
-        }
-        else {
-            //console.log("result:" + result);
-            const resData = {
-                result
-            };
-            res.json(JSON.stringify(resData));
-        }
-    });
 });
 //新增数据
 router.get("/add", function (req, res) {

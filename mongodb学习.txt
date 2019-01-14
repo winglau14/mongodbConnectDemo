@@ -1,3 +1,5 @@
 ﻿要以管理员的身份运行cmd，进入到mongodb安装目录下bin文件夹下执行下面命令
+//http://www.nonb.cn/blog/nodejs-mongoose-query-chinaese.html
 1.设置db与log日志保存位置：
-mongod.exe --dbpath "D:\mongodb\data\db"  --logpath "D:\mongodb\logs\log.txt"  --install -serviceName "MongoDB"
+mongod.exe --port 50107 --dbpath "D:\mongodb\data\db"  --logpath "D:\mongodb\logs\log.txt"  --install -serviceName "MongoDB"
+2.数据查询长度限制 .limit(len) len必须为number
