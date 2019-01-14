@@ -3,3 +3,6 @@
 1.设置db与log日志保存位置：
 mongod.exe --port 50107 --dbpath "D:\mongodb\data\db"  --logpath "D:\mongodb\logs\log.txt"  --install -serviceName "MongoDB"
 2.数据查询长度限制 .limit(len) len必须为number
+3.关于mongodb按照字段模糊查询方法
+模糊查询：tname包含某个关键字测试'
+db.test_info.find({"tname": {$regex: '测试', $options:'i'}}) 
