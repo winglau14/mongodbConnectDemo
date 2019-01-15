@@ -10,3 +10,4 @@ db.test_info.find({"tname": {$regex: '测试', $options:'i'}})
 db.test_info.limit().count(function(err,totalCount){
 
 });
+5.express-jwt是nodejs的一个中间件，他来验证指定http请求的JsonWebTokens的有效性，接口请求需要在headers加authorization:Bearer token的值
