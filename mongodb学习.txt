@@ -5,4 +5,8 @@ mongod.exe --port 50107 --dbpath "D:\mongodb\data\db"  --logpath "D:\mongodb\log
 2.数据查询长度限制 .limit(len) len必须为number
 3.关于mongodb按照字段模糊查询方法 https://blog.csdn.net/wuhenzhangxing/article/details/80496449
 模糊查询：tname包含某个关键字测试'
-db.test_info.find({"tname": {$regex: '测试', $options:'i'}}) 
+db.test_info.find({"tname": {$regex: '测试', $options:'i'}})
+4.计算数据总数
+db.test_info.limit().count(function(err,totalCount){
+
+});

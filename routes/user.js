@@ -34,25 +34,28 @@ router.get("/list", function (req, res) {
     const userName = req.query.name;
     //获取到所有的数据
     const query = User.find({});
-    //设置跳过的数据
-    query.skip(pageIndex * pageSize);
-    //设置最大查询数量
-    query.limit(pageSize);
     if (userName) {
         //模糊查询{$regex:userName}
         query.where("userName", {$regex:userName});
     }
+    //设置跳过的数据
+    query.skip(pageIndex * pageSize);
+    //设置最大查询数量
+    query.limit(pageSize);
     //计算分页数据
     query.exec(function (err, result) {
         if (err) {
             console.log("Error:" + err);
         }
         else {
-            const resData = {
-                code: 1,
-                data: result
-            };
-            res.json(resData);
+            //计算数据总数
+            query.limit().count(function(err,totalCount){
+                res.json({
+                    code: 1,
+                    totalCount:totalCount,
+                    data: result,
+                });
+            });
         }
     });
 });

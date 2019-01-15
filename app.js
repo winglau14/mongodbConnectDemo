@@ -102,7 +102,11 @@ router.post("/matchToken", function (req, res,next) {
 });
 app.use(router);*/
 app.use('/user',user);
-
+// catch 404 and forward to error handler
+app.use('*',function(req, res) {
+    res.status(404);
+    res.send('404 not found');
+});
 app.listen(config.serverPort,function(){
     console.log('listen port:'+config.serverPort);
 });
