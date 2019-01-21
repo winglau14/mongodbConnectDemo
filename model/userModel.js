@@ -1,5 +1,6 @@
 //数据库链接
-const mongoose = require("../common/dbConnect");
+const db = require("../common/dbConnect");
+const mongoose = db.mongoose;
 //创建一个Schema  每一个schema会一一对应mongo中的collection
 const UserSchema = new mongoose.Schema({
     //设置user信息的数据格式
