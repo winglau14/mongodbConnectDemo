@@ -11,3 +11,4 @@ db.test_info.limit().count(function(err,totalCount){
 
 });
 5.express-jwt是nodejs的一个中间件，他来验证指定http请求的JsonWebTokens的有效性，接口请求需要在headers加authorization:Bearer token的值
+6.mongodb 某字段自增长，插件包npm i mongoose-plugin-autoinc-fix    https://www.npmjs.com/package/mongoose-plugin-autoinc-fix

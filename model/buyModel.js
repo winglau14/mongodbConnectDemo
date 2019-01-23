@@ -1,6 +1,8 @@
 //数据库链接
 const db = require("../common/dbConnect");
 const mongoose = db.mongoose;
+//字段自增插件包
+const autoIncrement = require('mongoose-plugin-autoinc-fix');
 
 //创建一个Schema  每一个schema会一一对应mongo中的collection
 const BuySchema = new mongoose.Schema({
@@ -10,7 +12,7 @@ const BuySchema = new mongoose.Schema({
     buyFormId:Number,//生成表单ID
     createTime: Number,//表单创建时间
 });
-BuySchema.plugin(db.autoIncrement.plugin, {
+BuySchema.plugin(autoIncrement.plugin, {
     model:'buyData',
     field: 'buyFormId',
     startAt: 10000,

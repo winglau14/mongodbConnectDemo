@@ -19,7 +19,7 @@
     "bluebird": "^3.5.3",
     "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.4.0",
-    "mongoose-auto-increment-create-update": "^5.0.3",
+    "mongoose-plugin-autoinc-fix": "0.0.5",
     "request-promise": "^4.2.2"
   }
 }

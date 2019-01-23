@@ -39,10 +39,10 @@ app.use('/user', user);
 //表单模块路由
 app.use('/buy', buy);
 
-var OAuth = require('wechat-oauth');
-var client = new OAuth('wxd298d25b6cb7925a', '5509d88f318a024d5d1007e8dff56bff');
+/*var OAuth = require('wechat-oauth');
+var client = new OAuth('wxd298d25b6cb7925a', '5509d88f318a024d5d1007e8dff56bff');*/
 //获取微信数据
-app.get('/wx', function (req, res) {
+/*app.get('/wx', function (req, res) {
     const appid = 'wxd298d25b6cb7925a';
     const secret = '5509d88f318a024d5d1007e8dff56bff';
     const code = req.query.code || '033Rogo61hXn0L1dNwm611vko61Rogot';
@@ -62,7 +62,7 @@ app.get('/wx', function (req, res) {
             res.json(response);
         }
     });
-});
+});*/
 //开启服务
 app.listen(process.env.PORT || config.serverPort, function () {
     console.log('listen port:' + (process.env.PORT || config.serverPort));

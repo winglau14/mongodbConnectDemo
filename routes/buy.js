@@ -82,12 +82,10 @@ router.get("/detail", function (req, res) {
 router.post("/add", function (req, res) {
     const openId = req.body.openId;
     const buyFormData = req.body.buyFormData;
-    const buyFormId = req.body.buyFormId;
     //新增表单数据
     const newBuy = new Buy({
         openId: openId,
-        buyFormData: buyFormData,
-        //buyFormId:buyFormId
+        buyFormData: buyFormData
     });
     //保存表单数据
     newBuy.save(function (err, result) {
