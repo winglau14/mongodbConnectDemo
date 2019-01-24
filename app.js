@@ -38,31 +38,6 @@ app.use('/token', getToken);
 app.use('/user', user);
 //表单模块路由
 app.use('/buy', buy);
-
-/*var OAuth = require('wechat-oauth');
-var client = new OAuth('wxd298d25b6cb7925a', '5509d88f318a024d5d1007e8dff56bff');*/
-//获取微信数据
-/*app.get('/wx', function (req, res) {
-    const appid = 'wxd298d25b6cb7925a';
-    const secret = '5509d88f318a024d5d1007e8dff56bff';
-    const code = req.query.code || '033Rogo61hXn0L1dNwm611vko61Rogot';
-    //获取用户的微信openid
-    requestPromise({
-        uri: 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' + code + '&grant_type=authorization_code',
-        json: true
-    }).then(function (response) {
-        //获取微信用户信息
-        if(response.openid){
-            console.log(response.openid);
-            client.getUser(response.openid||'o7ijtv-Y0KIsj6glnoKPAqKYUFB0', function (err, result) {
-                console.log(err);
-                res.json(result);
-            });
-        }else{
-            res.json(response);
-        }
-    });
-});*/
 //开启服务
 app.listen(process.env.PORT || config.serverPort, function () {
     console.log('listen port:' + (process.env.PORT || config.serverPort));

@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const config = require("../common/config");
 //buy model 模块引入
 const Buy = require("../model/buyModel");
 //校验用户是否唯一
@@ -37,7 +36,7 @@ router.get("/list", function (req, res) {
     const query = Buy.find({});
     if (openId) {
         //模糊查询{$regex:userName}
-        query.where("openId", {$regex:openId});
+        query.where("openId", {$regex: openId});
     }
     //设置跳过的数据
     query.skip(pageIndex * pageSize);
@@ -50,10 +49,10 @@ router.get("/list", function (req, res) {
         }
         else {
             //计算数据总数
-            query.limit().count(function(err,totalCount){
+            query.limit().count(function (err, totalCount) {
                 res.json({
                     code: 1,
-                    totalCount:totalCount,
+                    totalCount: totalCount,
                     data: result,
                 });
             });
@@ -62,9 +61,9 @@ router.get("/list", function (req, res) {
 });
 //获取单条用户信息
 router.get("/detail", function (req, res) {
-    const id = req.query.id;
+    const buyFormId = req.query.buyFormId;
     Buy.findOne({
-        buyFormId: {$regex:id}
+        buyFormId
     }, function (err, result) {
         if (err) {
             console.log("Error:" + err);
@@ -78,11 +77,64 @@ router.get("/detail", function (req, res) {
         }
     });
 });
-//新增用户信息
+//新增表单信息
 router.post("/add", function (req, res) {
     const openId = req.body.openId;
-    const buyFormData = req.body.buyFormData;
-    //新增表单数据
+    //console.log(JSON.stringify(req.body.buyFormData));
+    const buyFormData = req.body.buyFormData && JSON.parse(req.body.buyFormData);
+    //校验参数
+    if (!openId && !buyFormData) {
+        res.status(400);
+        res.json({
+            code: 0,
+            errorMsg: "openId、buyFormData参数有误"
+        });
+        return false;
+    } else if (!openId) {
+        res.status(400);
+        res.json({
+            code: 0,
+            errorMsg: "openId参数有误"
+        });
+        return false;
+    } else if (!buyFormData) {
+        res.status(400);
+        res.json({
+            code: 0,
+            errorMsg: "buyFormData参数有误"
+        });
+        return false;
+    } else if (buyFormData) {
+        let objKeyArr = [];
+        //校验表单必要参数
+        Object.keys(buyFormData).forEach(function (key) {
+            if (key === "productName" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+            if (key === "amount" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+            if (key === "userName" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+            if (key === "userPhone" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+            if (key === "userAddress" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+        });
+        //buyFormData比填写参数个数小于5
+        if (objKeyArr.length < 5) {
+            res.status(400);
+            res.json({
+                code: 0,
+                errorMsg: "buyFormData参数有误"
+            });
+            return false;
+        }
+    }
+    //参数校验成功新增表单数据
     const newBuy = new Buy({
         openId: openId,
         buyFormData: buyFormData
@@ -97,10 +149,10 @@ router.post("/add", function (req, res) {
             });
         }
         else {
-            //console.log("result:" + result);
+            //新增成功返回buyFormId
             res.json({
                 code: 1,
-                message: "表单新增成功"
+                data: result.buyFormId
             });
         }
     });
