@@ -17,6 +17,8 @@ const getToken = require("./routes/token");
 const user = require("./routes/user");
 //表单模块路由
 const buy = require("./routes/buy");
+//图片上传模块路由
+const upLoad = require("./routes/upLoad");
 //使用中间件验证token合法性
 /*app.use(expressJwt({
     secret: config.jwtKey
@@ -38,6 +40,8 @@ app.use('/token', getToken);
 app.use('/user', user);
 //表单模块路由
 app.use('/buy', buy);
+//图片模块路由
+app.use('/upLoad', upLoad);
 //开启服务
 app.listen(process.env.PORT || config.serverPort, function () {
     console.log('listen port:' + (process.env.PORT || config.serverPort));
