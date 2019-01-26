@@ -1,7 +1,8 @@
 ﻿要以管理员的身份运行cmd，进入到mongodb安装目录下bin文件夹下执行下面命令
-//http://www.nonb.cn/blog/nodejs-mongoose-query-chinaese.html
+//http://www.nonb.cn/blog/nodejs-mongoose-query-chinaese.html 开启服务 net start MongoDB
 1.设置db与log日志保存位置：
 mongod.exe --port 50107 --dbpath "D:\mongodb\data\db"  --logpath "D:\mongodb\logs\log.txt"  --install -serviceName "MongoDB"
+
 2.数据查询长度限制 .limit(len) len必须为number
 3.关于mongodb按照字段模糊查询方法 https://blog.csdn.net/wuhenzhangxing/article/details/80496449
 模糊查询：tname包含某个关键字测试'

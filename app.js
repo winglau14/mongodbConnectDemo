@@ -6,7 +6,8 @@ const cors = require('cors');
 const app = express();
 //支持跨域
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true,limit:'10mb'}));
+app.use(bodyParser.json({ limit: '10mb' }));
 //静态资源访问路由
 app.use('/static', express.static('static'));
 //api接口校验及权限拦截
