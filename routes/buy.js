@@ -51,7 +51,7 @@ router.get("/list", function (req, res) {
             //计算数据总数
             query.limit().count(function (err, totalCount) {
                 res.json({
-                    code: 1,
+                    code: totalCount>0?1:0,
                     totalCount: totalCount,
                     data: result,
                 });
@@ -70,7 +70,7 @@ router.get("/detail", function (req, res) {
         }
         else {
             const resData = {
-                code: 1,
+                code: result?1:0,
                 data: result
             };
             res.json(resData);
@@ -153,6 +153,89 @@ router.post("/add", function (req, res) {
             res.json({
                 code: 1,
                 data: result.buyFormId
+            });
+        }
+    });
+});
+//更新表单信息
+router.post("/update", function (req, res) {
+    const openId = req.body.openId;
+    //console.log(JSON.stringify(req.body.buyFormData));
+    const buyFormData = req.body.buyFormData && JSON.parse(req.body.buyFormData);
+    const buyFormId = req.body.buyFormId;
+    //校验参数
+    if (!openId && !buyFormData&&!formId) {
+        res.status(400);
+        res.json({
+            code: 0,
+            errorMsg: "openId、buyFormData、formId参数有误"
+        });
+        return false;
+    } else if (!openId) {
+        res.status(400);
+        res.json({
+            code: 0,
+            errorMsg: "openId参数有误"
+        });
+        return false;
+    } else if (!buyFormId) {
+        res.status(400);
+        res.json({
+            code: 0,
+            errorMsg: "buyFormId参数有误"
+        });
+        return false;
+    } else if (!buyFormData) {
+        res.status(400);
+        res.json({
+            code: 0,
+            errorMsg: "buyFormData参数有误"
+        });
+        return false;
+    } else if (buyFormData) {
+        let objKeyArr = [];
+        //校验表单必要参数
+        Object.keys(buyFormData).forEach(function (key) {
+            if (key === "productName" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+            if (key === "amount" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+            if (key === "userName" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+            if (key === "userPhone" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+            if (key === "userAddress" && buyFormData[key]) {
+                objKeyArr.push(key);
+            }
+        });
+        //buyFormData比填写参数个数小于6
+        if (objKeyArr.length < 5) {
+            res.status(400);
+            res.json({
+                code: 0,
+                errorMsg: "buyFormData参数有误"
+            });
+            return false;
+        }
+    }
+    //更新表单数据
+    Buy.update({buyFormId:buyFormId},{$set:{buyFormData: buyFormData}},function (err) {
+        if (err) {
+            console.log("Error:" + err);
+            res.json({
+                code: 0,
+                message: "表单更新失败"
+            });
+        }
+        else {
+            //新增成功返回buyFormId
+            res.json({
+                code: 1,
+                data: buyFormId*1
             });
         }
     });
