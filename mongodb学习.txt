@@ -1,5 +1,57 @@
 ﻿要以管理员的身份运行cmd，进入到mongodb安装目录下bin文件夹下执行下面命令
-//http://www.nonb.cn/blog/nodejs-mongoose-query-chinaese.html 开启服务 net start MongoDB
+开启服务 net start MongoDB
+(1)数据库查询：mongo
+(2)查看数据库列表:show dbs
+(3)使用对应数据库:use userdb
+(4)创建用户:
+db.createUser({
+            user:"winglau14",
+            pwd:"winglau_14!",
+            customData:{
+                name:'winglau14',
+                email:'397069329@qq.com',
+                age:18,
+            },
+            roles:[
+                {
+                    role:"readWrite",
+                    db:"userdb"
+                },
+                'read'
+            ]
+})
+(5)设置权限 db.auth("winglau14","winglau_14!") 返回1说明授权成功
+(6)如何用 mongoose 指定用户连接数据库
+mongoose.connect("mongodb://winglau14:winglau14@localhost:27017/userdb", {
+    useMongoClient: true,
+    connectTimeoutMS: 10000, // 10s后放弃重新连接
+    socketTimeoutMS: 45000, // 在45s不活跃后关闭sockets
+});
+下面我们来看下 mongodb 一共有哪些权限:
+
+1. 数据库用户角色：read、readWrite;
+2. 数据库管理角色：dbAdmin、dbOwner、userAdmin；
+3. 集群管理角色：clusterAdmin、clusterManager、clusterMonitor、hostManager；
+4. 备份恢复角色：backup、restore；
+5. 所有数据库角色：readAnyDatabase、readWriteAnyDatabase、userAdminAnyDatabase、dbAdminAnyDatabase
+6. 超级用户角色：root
+// 这里还有几个角色间接或直接提供了系统超级用户的访问（dbOwner 、userAdmin、userAdminAnyDatabase）
+7. 内部角色：__system
+read:允许用户读取指定数据库
+readWrite:允许用户读写指定数据库
+dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile
+userAdmin：允许用户向system.users集合写入，可以找指定数据库里创建、删除和管理用户
+clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。
+readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限
+readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限
+userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限
+dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。
+root：只在admin数据库中可用。超级账号，超级权限
+
+
+
+
+//http://www.nonb.cn/blog/nodejs-mongoose-query-chinaese.html
 1.设置db与log日志保存位置：
 mongod.exe --port 50107 --dbpath "D:\mongodb\data\db"  --logpath "D:\mongodb\logs\log.txt"  --install -serviceName "MongoDB"
 
@@ -13,3 +65,26 @@ db.test_info.limit().count(function(err,totalCount){
 });
 5.express-jwt是nodejs的一个中间件，他来验证指定http请求的JsonWebTokens的有效性，接口请求需要在headers加authorization:Bearer token的值
 6.mongodb 某字段自增长，插件包npm i mongoose-plugin-autoinc-fix    https://www.npmjs.com/package/mongoose-plugin-autoinc-fix
+7.更新某字段
+'{buyFormId:buyFormId}'要更新的哪一条数据，'{$set:{buyFormData: buyFormData}}'更新这条数据的那些字段
+Buy.update({buyFormId:buyFormId},{$set:{buyFormData: buyFormData}},function (err) {
+        if (err) {
+            console.log("Error:" + err);
+            res.json({
+                code: 0,
+                message: "表单更新失败"
+            });
+        }
+        else {
+            //新增成功返回buyFormId
+            res.json({
+                code: 1,
+                data: buyFormId*1
+            });
+        }
+    });
+8.服务的删除：
+
+  有些小伙伴通过 cmd->services.msc 找到 mongodb服务，但却无法删除
+
+  方法：通过cmd  进入安装的mongodb路径，进入bin目录，使用命令  mongod.exe --remove --serviceName "MongoDB"

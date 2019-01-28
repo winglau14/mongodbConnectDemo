@@ -67,6 +67,11 @@ router.get("/detail", function (req, res) {
     }, function (err, result) {
         if (err) {
             console.log("Error:" + err);
+            res.status(400);
+            res.json({
+                code:-1,
+                errorMsg:err
+            });
         }
         else {
             const resData = {
@@ -164,7 +169,7 @@ router.post("/update", function (req, res) {
     const buyFormData = req.body.buyFormData && JSON.parse(req.body.buyFormData);
     const buyFormId = req.body.buyFormId;
     //校验参数
-    if (!openId && !buyFormData&&!formId) {
+    if (!openId && !buyFormData&&!buyFormId) {
         res.status(400);
         res.json({
             code: 0,

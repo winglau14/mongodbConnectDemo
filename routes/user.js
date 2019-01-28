@@ -109,7 +109,7 @@ router.post("/login", function (req, res) {
     const source = req.body.source;//客户端标识weixin or qq
     const nickName = req.body.nickName;//用户昵称
     const avatarUrl = req.body.avatarUrl;//用户头像
-    console.log(`${openId} ${source} ${nickName} ${avatarUrl}`);
+    //console.log(`${openId} ${source} ${nickName} ${avatarUrl}`);
     if(!openId&&!source&&!nickName&&!avatarUrl){
         res.status(400);
         res.json({
