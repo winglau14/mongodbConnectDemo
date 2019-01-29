@@ -62,6 +62,13 @@ router.get("/list", function (req, res) {
 //获取单条用户信息
 router.get("/detail", function (req, res) {
     const buyFormId = req.query.buyFormId;
+    if(!buyFormId){
+        res.json({
+            code:-1,
+            errorMsg:"缺少buyFormId参数"
+        });
+        return false;
+    }
     Buy.findOne({
         buyFormId
     }, function (err, result) {
@@ -85,7 +92,6 @@ router.get("/detail", function (req, res) {
 //新增表单信息
 router.post("/add", function (req, res) {
     const openId = req.body.openId;
-    //console.log(JSON.stringify(req.body.buyFormData));
     const buyFormData = req.body.buyFormData && JSON.parse(req.body.buyFormData);
     //校验参数
     if (!openId && !buyFormData) {
