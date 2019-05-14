@@ -53,7 +53,7 @@ root：只在admin数据库中可用。超级账号，超级权限
 
 //http://www.nonb.cn/blog/nodejs-mongoose-query-chinaese.html
 1.设置db与log日志保存位置：
-mongod.exe --port 50107 --dbpath "D:\mongodb\data\db"  --logpath "D:\mongodb\logs\log.txt"  --install -serviceName "MongoDB"
+mongod.exe --port 50107 --dbpath "D:\mongodb\data\db"  --logpath "D:\mongodb\logs\mongo.log"  --install -serviceName "MongoDB"
 
 2.数据查询长度限制 .limit(len) len必须为number
 3.关于mongodb按照字段模糊查询方法 https://blog.csdn.net/wuhenzhangxing/article/details/80496449
